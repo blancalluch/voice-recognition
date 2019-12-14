@@ -1,0 +1,6 @@
+__pycache__/
+input_filtered
+input_processed
+output
+.DS_Store
+.ipynb_checkpoints
