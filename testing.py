@@ -6,6 +6,7 @@ from sklearn.metrics import accuracy_score
 from sklearn.metrics import precision_score
 from sklearn.metrics import recall_score
 import pickle
+from joblib import dump, load
 
 df=pd.read_pickle('./output/DataSetAudios.pkl')
 
@@ -27,8 +28,9 @@ print('Accuracy',accuracy_score(df_pred["gt"],df_pred['pred']))
 print("Precision", precision_score(df_pred["gt"],df_pred['pred'],average='weighted'))
 print("Recall", recall_score(df_pred["gt"],df_pred['pred'],average='weighted'))
 
-pickle.dump(clf, open('modelo3', 'wb'))
-
+#pickle.dump(clf, open('modelo4', 'wb'))
+i=5
+dump(clf, f'./models/modeli{i}.joblib')
 #df_pred[df_pred['gt']=='SeoRa']['pred'].value_counts().index[0]
 
 
