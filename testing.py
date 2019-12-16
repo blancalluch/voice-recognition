@@ -9,8 +9,6 @@ import pickle
 from joblib import dump, load
 import numpy as np
 
-df=pd.read_pickle('./output/DataSetAudios.pkl')
-
 def testModel(df):
     y=df['name']
     X=list(df['features'])
@@ -32,9 +30,11 @@ def testModel(df):
 
     return clf
 
+df=pd.read_pickle('./output/DataSetAudios.pkl')
+
 clf=testModel(df)
 
-i=8
+i=10
 dump(clf, f'./models/modeli{i}.joblib')
 #df_pred[df_pred['gt']=='SeoRa']['pred'].value_counts().index[0]
 

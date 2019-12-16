@@ -22,7 +22,9 @@ def splitXSecond(x,overlap,path):
         for c in list(chunks):
             Fr=int((audio.frame_rate)/1000)
             length_audio=int((c[1]-c[0])/Fr)
+            #print(length_audio)
             if length_audio>=x:
+                #i=0
                 for l in range(0,length_audio,overlap):
                     if max(audio_arr[l*Fr:(l+x)*Fr])>62:
                         a={}
@@ -30,33 +32,31 @@ def splitXSecond(x,overlap,path):
                         a['gender']=word[0]
                         silence_filter = array.array('h')
                         silence_filter.fromlist(list(map(int,audio_arr[l*Fr:(l+x)*Fr])))
+                        #print(len(silence_filter))
                         a['1SecArray']=silence_filter
+                        #audio_filtered=audio._spawn(data=silence_filter)
+                        #i+=1
+                        #audio_filtered.export(f"./check/{word[1:]}{i}.wav", format="wav")
                         audios.append(a)
     return audios
 
 
 def fftransform(array):
     '''fft to all the array (column in this case)'''
-    return np.abs(fft(array,512))
+    return np.abs(fft(array,4096))
 
 def mfccTransform(arr):
     '''mfcc to all the array (column in this case)'''
-    mfc=librosa.feature.mfcc(y=np.array(arr).astype('float64'),sr=24000,n_mfcc=256)
+    mfc=librosa.feature.mfcc(y=np.array(arr).astype('float64'),sr=24000,n_mfcc=512)
     return np.mean(mfc,axis=1)
 
 def prepDf(dfAudio):
     '''applies fft and mfcc to 1SecArray column, concatenates them and drops fft and mccf.'''
-    #dfAudio['fft']=dfAudio['1SecArray'].apply(lambda x: fftransform(x))
-    #dfAudio['mfcc']=dfAudio['1SecArray'].apply(lambda x: mfccTransform(x))
     
     dfAudio['features']=dfAudio['1SecArray'].apply(lambda x: np.concatenate([fftransform(x),mfccTransform(x)]))
     dfAudio['features']=np.array(dfAudio['features'])
     dfAudio['gender']=list(map(lambda x: 1 if x=='H' else 0,dfAudio['gender']))
-    print(dfAudio.loc[0,"features"].shape)
-
-    #dfAudio['fft+mfcc']=list(map(lambda x,y: np.concatenate((np.array(x),np.array(y))),dfAudio['fft'],dfAudio['mfcc']))
-    
-    #dfAudio.drop(columns=['fft','mfcc'],inplace=True)
+    print(dfAudio.loc[0,"features"].shape)    
 
     return dfAudio
 
