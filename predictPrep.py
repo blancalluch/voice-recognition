@@ -1,9 +1,10 @@
 from joblib import load
+import numpy as np
 
-def prediction(df):
+def prediction(arr):
 
-    X_test=list(map(lambda x: x,df['fft+mfcc']))
-    clf = load('./models/modeli4.joblib')
+    X_test=np.expand_dims(arr,axis=0)
+    clf = load('./models/modeli6.joblib')
     res = clf.predict(X_test)
     
     return res

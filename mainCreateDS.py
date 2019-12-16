@@ -5,7 +5,7 @@ import numpy as np
 
 subprocess.call(['./subprocess.sh',"./input/*"])
 
-audio_dict=cds.splitXSecond(1000,500,"./input_processed/*")
+audio_dict=cds.splitXSecond(2000,500,"./input_processed/*")
 
 dfAudio=pd.DataFrame(audio_dict)
 
