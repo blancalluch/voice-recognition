@@ -1,15 +1,27 @@
 import pandas as pd
-import array
 from sklearn.model_selection import train_test_split
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import accuracy_score
 from sklearn.metrics import precision_score
 from sklearn.metrics import recall_score
 import pickle
-from joblib import dump, load
-import numpy as np
+from joblib import dump
+import neuralN as nn
+import sys
+
+df=pd.read_pickle('./output/DataSetAudios.pkl')
+
+def chooseModel(random,neuraln):
+    '''choosing model to train'''
+    if neuraln:
+        nn.nnModel(df)
+    else:
+        testModel(df)
+    return
+
 
 def testModel(df):
+    '''choosing randomForest model'''
     y=df['name']
     X=list(df['features'])
 
@@ -28,15 +40,12 @@ def testModel(df):
     print("Precision", precision_score(df_pred["gt"],df_pred['pred'],average='weighted'))
     print("Recall", recall_score(df_pred["gt"],df_pred['pred'],average='weighted'))
 
-    return clf
+    #i=10
+    dump(clf, f'./models/modelo1.joblib')
 
-df=pd.read_pickle('./output/DataSetAudios.pkl')
+    return
 
-clf=testModel(df)
-
-i=10
-dump(clf, f'./models/modeli{i}.joblib')
-#df_pred[df_pred['gt']=='SeoRa']['pred'].value_counts().index[0]
+chooseModel(sys.argv[0],sys.argv[1])
 
 
 

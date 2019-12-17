@@ -4,12 +4,5 @@ input_processed
 output
 .DS_Store
 .ipynb_checkpoints
-
-models/Model_0.6007194519042969_16-20-44.h5
-models/Model_0.6007194519042969_16-20-44.h5.h5
-models/Model_0.6007194519042969_16-20-44.h5.json
-models/modeli10.joblib
-models/modeli9.joblib
-models/primer_nn.joblib
-models/primerito.h5
-models/primerito.hf5
+jupyters/
+models/

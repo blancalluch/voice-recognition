@@ -22,9 +22,7 @@ def splitXSecond(x,overlap,path):
         for c in list(chunks):
             Fr=int((audio.frame_rate)/1000)
             length_audio=int((c[1]-c[0])/Fr)
-            #print(length_audio)
             if length_audio>=x:
-                #i=0
                 for l in range(0,length_audio,overlap):
                     if max(audio_arr[l*Fr:(l+x)*Fr])>62:
                         a={}
@@ -32,11 +30,7 @@ def splitXSecond(x,overlap,path):
                         a['gender']=word[0]
                         silence_filter = array.array('h')
                         silence_filter.fromlist(list(map(int,audio_arr[l*Fr:(l+x)*Fr])))
-                        #print(len(silence_filter))
                         a['1SecArray']=silence_filter
-                        #audio_filtered=audio._spawn(data=silence_filter)
-                        #i+=1
-                        #audio_filtered.export(f"./check/{word[1:]}{i}.wav", format="wav")
                         audios.append(a)
     return audios
 
@@ -52,7 +46,6 @@ def mfccTransform(arr):
 
 def prepDf(dfAudio):
     '''applies fft and mfcc to 1SecArray column, concatenates them and drops fft and mccf.'''
-    
     dfAudio['features']=dfAudio['1SecArray'].apply(lambda x: np.concatenate([fftransform(x),mfccTransform(x)]))
     dfAudio['features']=np.array(dfAudio['features'])
     dfAudio['gender']=list(map(lambda x: 1 if x=='H' else 0,dfAudio['gender']))

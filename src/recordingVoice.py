@@ -4,7 +4,7 @@ import numpy as np
 import predictPrep as pp
 
 def recording():
-    
+    '''recording and predicting each second recorded'''
     FORMAT = pyaudio.paInt16
     CHANNELS = 1
     RATE = 24000
@@ -20,17 +20,10 @@ def recording():
 
     frames = []
     while True:
-        data = stream.read(CHUNK)
+        data = stream.read(CHUNK, exception_on_overflow = False)
         frames.append(np.frombuffer(data, dtype=np.int16))
-        if len(frames) > (RATE/CHUNK)-1:
+        if len(frames) >= RATE/CHUNK:
             toPredict = np.concatenate(frames)
-            print(toPredict.shape)
-            waveFile = wave.open('./audio.wav', 'wb')
-            waveFile.setnchannels(CHANNELS)
-            waveFile.setsampwidth(audio.get_sample_size(FORMAT))
-            waveFile.setframerate(RATE)
-            waveFile.writeframes(b''.join(frames))
-            waveFile.close()
             pp.predictData(toPredict)
             frames=[]
 
