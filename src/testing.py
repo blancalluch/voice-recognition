@@ -9,7 +9,7 @@ from joblib import dump
 import neuralN as nn
 import sys
 
-df=pd.read_pickle('./output/DataSetAudios.pkl')
+df=pd.read_pickle('../output/DataSetAudios.pkl')
 
 def chooseModel(random,neuraln):
     '''choosing model to train'''

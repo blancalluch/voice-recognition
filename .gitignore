@@ -6,3 +6,4 @@ output
 .ipynb_checkpoints
 jupyters/
 models/
+/src/__pycache__/

@@ -30,7 +30,7 @@ def predictData(audioData):
     res = prediction(tot_array)
     x=sorted(list(res[0]),reverse=True)[:5]
     le = preprocessing.LabelEncoder()
-    le.classes_ = np.load('class_names.npy',allow_pickle=True)
+    le.classes_ = np.load('class_names2.npy',allow_pickle=True)
     for e in x:
         name=le.inverse_transform([list(res[0]).index(e)])
         print(name)
