@@ -5,7 +5,7 @@ import numpy as np
 '''creating dataset with audios filtered'''
 subprocess.call(['./subprocess.sh',"../input/*"])
 
-audio_dict=cds.splitXSecond(1000,500,"../input_processed/*")
+audio_dict=cds.splitXSecond(500,250,"../input_processed/*")
 
 dfAudio=pd.DataFrame(audio_dict)
 
