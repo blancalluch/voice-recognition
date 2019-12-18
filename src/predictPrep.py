@@ -26,15 +26,17 @@ def treating(data):
 
 def predictData(audioData):
     '''prediction results'''
-    tot_array=treating(audioData)
-    res = prediction(tot_array)
+    #tot_array=treating(audioData)
+    #res = prediction(tot_array)
+
+    res = prediction(audioData)
     x=sorted(list(res[0]),reverse=True)[:5]
     le = preprocessing.LabelEncoder()
-    le.classes_ = np.load('class_names.npy',allow_pickle=True)
+    le.classes_ = np.load('class_names1.npy',allow_pickle=True)
     topResults = []
     for e in x:
         topResults.append(le.inverse_transform([list(res[0]).index(e)])[0])
     topResultsStr = ','.join(topResults[1:])
     print(f'TOP: {topResults[0]} [{topResultsStr}]')
     #os.system('clear')
-    return
+    return  
