@@ -9,11 +9,11 @@ from sklearn.model_selection import train_test_split
 
 def nn_prediction(X_test):
     '''predicting with predicted model'''
-    with open('../models/1_nn.json','r') as f:
+    with open('../models/ab_nn.json','r') as f:
         model_json = json.load(f)
 
     model = model_from_json(model_json)
-    model.load_weights('../models/1_nn.h5')
+    model.load_weights('../models/ab_nn.h5')
     #print('Model loaded')
     predictions = model.predict(X_test)
     return predictions
@@ -27,10 +27,26 @@ def nnModel(df):
     le.fit(y_names)
 
     y=np.vstack(le.transform(y_names))
+
+    #con fft y mfcc
     #X=np.vstack(df['features'])
-    #print(type(np.vstack(np.expand_dims(list(df['1SecArray']),axis=1))))
+    
+    #con 1secarray
+    '''yn=[]
+    xn=[]
+    for e in list(zip(df['1SecArray'],y)):
+        #print(len(e[0]))
+        if len(e[0])==12000:
+            xn.append(np.array(e[0]))
+            yn.append(np.array(e[1]))
+    X=np.vstack(xn)
+    y=np.vstack(yn)'''
 
 
+    #con todo
+    Xf=df['features']
+    i=0
+    x1=[]
     yn=[]
     xn=[]
     for e in list(zip(df['1SecArray'],y)):
@@ -38,13 +54,16 @@ def nnModel(df):
         if len(e[0])==12000:
             xn.append(np.array(e[0]))
             yn.append(np.array(e[1]))
-    #print(xn)
-    X=np.vstack(xn)
+            x1.append(np.array(Xf[i]))
+        i+=1
+
+    X=np.concatenate((np.vstack(xn),np.vstack(x1)),axis=1)
+    print(X.shape)
     y=np.vstack(yn)
 
 
     #print(X.shape,y)
-    np.save('class_names1.npy', le.classes_)
+    np.save('class_namesab.npy', le.classes_)
     X_train, X_test, y_train, y_test = train_test_split(X, y,test_size=0.2)
     #print(X_train.shape)
     inshape=(X_train.shape[1],)
@@ -71,10 +90,10 @@ def nnModel(df):
     print("\n")
 
     predictions = model.predict(X_test)
-    #print(predictions)
+    print(predictions)
 
     print(model)
-    name='../models/1_nn'
+    name='../models/ab_nn'
 
     model_json = model.to_json()
     with open(name+'.json', "w") as json_file:

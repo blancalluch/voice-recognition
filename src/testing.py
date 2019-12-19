@@ -13,7 +13,7 @@ df=pd.read_pickle('../output/DataSetAudios.pkl')
 
 def chooseModel(random,neuraln):
     '''choosing model to train'''
-    if neuraln:
+    if int(neuraln):
         nn.nnModel(df)
     else:
         testModel(df)
@@ -29,7 +29,7 @@ def testModel(df):
     clf=RandomForestClassifier()
     clf.fit(X_train, y_train)
     y_pred=clf.predict(X_test)
-
+    
     df_pred=pd.DataFrame({'gt':y_test, 'pred':y_pred})
 
     for i in list(df_pred['gt'].index):
@@ -40,8 +40,8 @@ def testModel(df):
     print("Precision", precision_score(df_pred["gt"],df_pred['pred'],average='weighted'))
     print("Recall", recall_score(df_pred["gt"],df_pred['pred'],average='weighted'))
 
-    #i=10
-    dump(clf, f'./models/modelo1.joblib')
+    
+    dump(clf,'../models/modelo4.joblib')
 
     return
 

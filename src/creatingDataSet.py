@@ -15,7 +15,7 @@ def splitXSecond(x,overlap,path):
     for file in glob.iglob(path):
         print(file)
         a={}
-        word=re.findall('[H,M,X][a-zA-Z]+',file)[0]
+        word=re.findall('[F,M,X][a-zA-Z]+',file)[0]
         audio=AudioSegment.from_file(file,format='wav')
         audio_arr=np.array(audio.get_array_of_samples()).astype("float64")
         chunks=librosa.effects.split(audio_arr, top_db=40, frame_length=2048, hop_length=512)
@@ -48,7 +48,7 @@ def prepDf(dfAudio):
     '''applies fft and mfcc to 1SecArray column, concatenates them and drops fft and mccf.'''
     dfAudio['features']=dfAudio['1SecArray'].apply(lambda x: np.concatenate([fftransform(x),mfccTransform(x)]))
     dfAudio['features']=np.array(dfAudio['features'])
-    dfAudio['gender']=list(map(lambda x: 1 if x=='H' else 0,dfAudio['gender']))
+    dfAudio['gender']=list(map(lambda x: 1 if x=='M' else 0,dfAudio['gender']))
     print(dfAudio.loc[0,"features"].shape)    
 
     return dfAudio
