@@ -64,30 +64,30 @@ class App():
                     relheight=0.04, anchor='n')
 
         # button - predict name
-        frame1 = Frame(self.window, bg='black',bd=10)
-        frame1.place(relx=0.5, rely=0.85, relwidth=0.7,
+        self.frame1 = Frame(self.window, bg='black',bd=10)
+        self.frame1.place(relx=0.5, rely=0.85, relwidth=0.7,
                     relheight=0.07, anchor='n')
 
-        button1 = Button(frame1, bg="black", text="Predict Name", font=("Helvetica Bold",19),command=self.predict)
-        button1.place(relx=0,rely=0, relheight=1, relwidth=1)
-        button1.configure(foreground='white' ,fg='black',relief='solid')
+        self.button1 = Button(self.frame1, bg="black", text="Predict Name", font=("Helvetica Bold",19),command=self.predict)
+        self.button1.place(relx=0,rely=0, relheight=1, relwidth=1)
+        self.button1.configure(foreground='white' ,fg='black',relief='solid')
 
 
     def add_audio(self):
-        self.lbl5 = Label(self.window, text="Recording...",fg="white",bg="black", width=200)
-        self.lbl5.place(relx=0.5, rely=0.2,relwidth=0.2, relheight=0.075,anchor='n')
-        self.lbl5.config(font=("Helvetica Bold", 20))
+        #self.lbl5 = Label(self.window, text="Recording...",fg="white",bg="black", width=200)
+        #self.lbl5.place(relx=0.5, rely=0.2,relwidth=0.2, relheight=0.075,anchor='n')
+        #self.lbl5.config(font=("Helvetica Bold", 20))
         rv.recording(24000,1000,f'../input/{self.combo.get()}{self.txt1.get()+self.txt2.get()}.wav',0,2)
 
     def predict(self):
-        self.lbl6 = Label(self.window, text="Predicting name...",fg="white",bg="black", width=200)
-        self.lbl6.place(relx=0.5, rely=0.2,relwidth=0.2, relheight=0.075,anchor='n')
-        self.lbl6.config(font=("Helvetica Bold", 20))
-        res=rv.recording(24000,1000,0,1,40)
+        #self.lbl6 = Label(self.window,text="Predicting name...",fg="white",bg="black", width=200)
+        #self.lbl6.place(relx=0.5, rely=0.2,relwidth=0.2, relheight=0.075,anchor='n')
+        #self.lbl6.config(font=("Helvetica Bold", 20))
+        self.res=rv.recording(24000,1000,0,1,15)
         self.scrolltxt2 = scrolledtext.ScrolledText(self.window)
         self.scrolltxt2.place(relx=0.85, rely=0.05,relwidth=0.325, relheight=0.5,anchor='n')
-        self.scrolltxt2.insert(INSERT,'\n'.join([e[0] for e in res]))
-        self.lbl6.config(text="Finished predicting.")
+        self.scrolltxt2.insert(INSERT,'\n'.join([e[0] for e in self.res]))
+        #self.lbl6.config(text="")
 
 
 a = App()

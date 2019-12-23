@@ -62,8 +62,8 @@ def nnModel(df):
     y=np.vstack(yn)
 
 
-    #print(X.shape,y)
-    np.save('class_namesab.npy', le.classes_)
+    print(X.shape,y)
+    np.save('class_names11.npy', le.classes_)
     X_train, X_test, y_train, y_test = train_test_split(X, y,test_size=0.2)
     #print(X_train.shape)
     inshape=(X_train.shape[1],)
@@ -93,7 +93,7 @@ def nnModel(df):
     print(predictions)
 
     print(model)
-    name='../models/ab_nn'
+    name='../models/11_nn'
 
     model_json = model.to_json()
     with open(name+'.json', "w") as json_file:

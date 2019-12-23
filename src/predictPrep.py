@@ -40,11 +40,12 @@ def predictData(audioData):
 
     tot_array=treating(audioData)
     res = prediction(tot_array)
+    print(tot_array.shape)
     '''prediction with 1secarray'''
     #res = prediction(audioData)
     x=sorted(list(res[0]),reverse=True)[:5]
     le = preprocessing.LabelEncoder()
-    le.classes_ = np.load('./class_names/class_namesab.npy',allow_pickle=True)
+    le.classes_ = np.load('./class_names/class_names11.npy',allow_pickle=True)
     topResults = []
     for e in x:
         topResults.append(le.inverse_transform([list(res[0]).index(e)])[0])
